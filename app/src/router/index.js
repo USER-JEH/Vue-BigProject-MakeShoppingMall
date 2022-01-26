@@ -8,6 +8,27 @@ import Home from '@/pages/Home'
 import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
+//先把VueRouter原型对象的push，存一份下来
+let originPush = VueRouter.prototype.push;
+let originReplace = VueRouter.prototype.replace;
+
+//重写push replace
+VueRouter.prototype.push = function(location, resolve, reject){
+    if(resolve && reject){
+        originPush.call(this, location, resolve, reject);
+    } else {
+        originPush.call(this, location, ()=> { }, ()=> { });
+    }
+}
+
+VueRouter.prototype.replace = function(location, resolve, reject){
+    if(resolve && reject){
+        originReplace.call(this, location, resolve, reject);
+    } else {
+        originReplace.call(this, location, ()=> { }, ()=> { });
+    }
+}
+
 //配置路由
 export default new VueRouter({
     //配置路由
@@ -18,10 +39,13 @@ export default new VueRouter({
             meta:{show:true}
         },
         {
-            path:"/search/:keyword",
+            path:"/search/:keyword?",
             component:Search,
             meta:{show:true},
-            name:"search"
+            name:"search",
+            // props:true,
+            // props:{a:1,b:2},
+            props:($route)=>({keyword:$route.params.keyword,k:$route.query.k})
         },
         {
             path:"/login",
