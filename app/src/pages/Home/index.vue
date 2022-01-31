@@ -9,6 +9,7 @@
     <Floor/>
     <Floor/>
     <Brand/>
+
   </div>
 </template>
 
@@ -30,8 +31,8 @@ export default {
       Like,
       Floor,
       Brand
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
