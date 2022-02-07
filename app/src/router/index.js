@@ -45,7 +45,12 @@ export default new VueRouter({
             name:"search",
             // props:true,
             // props:{a:1,b:2},
-            props:($route)=>({keyword:$route.params.keyword,k:$route.query.k})
+            props:($route)=>(
+                {
+                    keyword:$route.params.keyword,
+                    k:$route.query.k
+                }
+            )
         },
         {
             path:"/login",
