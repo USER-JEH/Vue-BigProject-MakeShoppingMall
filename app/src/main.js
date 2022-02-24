@@ -14,6 +14,9 @@ import store from '@/store'
 import '@/mock/mockServe'
 
 import 'swiper/css/swiper.css'
+
+import { repGetSearchInfo } from '@/api'
+console.log(repGetSearchInfo({}))
 new Vue({
   render: (h) => h(App),
   //注册路由
