@@ -136,11 +136,45 @@ export default {
   components: {
     SearchSelector,
   },
+  data() {
+    return {
+      searchParams: {
+        category1Id: '',
+        category2Id: '',
+        category3Id: '',
+        categoryName: '',
+        keyword: '',
+        order: '',
+        pageNo: 1,
+        pageSize: 3,
+        props: [],
+        trademark: '',
+      },
+    }
+  },
+  beforeMount() {
+    Object.assign(this.searchParams, this.$route.query, this.$route.params)
+  },
   mounted() {
-    this.$store.dispatch('getSearchList', {})
+    this.getData()
+  },
+  methods: {
+    getData() {
+      this.$store.dispatch('getSearchList', this.searchParams)
+    },
   },
   computed: {
     ...mapGetters(['goodsList']),
+  },
+  watch: {
+    $route(newValue, oleValue) {
+      Object.assign(this.searchParams, this.$route.query, this.$route.params)
+      this.getData()
+
+      this.searchParams.category1Id = ''
+      this.searchParams.category2Id = ''
+      this.searchParams.category3Id = ''
+    },
   },
 }
 </script>
