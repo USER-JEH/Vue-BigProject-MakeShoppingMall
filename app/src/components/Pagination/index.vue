@@ -2,7 +2,7 @@
   <div class="pagination">
     <button>前ページ</button>
     <button>1</button>
-    <button>・・・</button>
+    <button>…</button>
 
     <button>3</button>
     <button>4</button>
@@ -10,17 +10,46 @@
     <button>6</button>
     <button>7</button>
 
-    <button>・・・</button>
-    <button>9</button>
+    <button>…</button>
+    <button>{{ totalPage }}</button>
     <button>次ページ</button>
 
-    <button style="margin-left: 30px">60</button>
+    <button style="margin-left: 30px">計{{ total }}個</button>
+    <h1>{{ startNumAndEndNum }}--{{ pageNo }}</h1>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Pagination',
+  props: ['pageNo', 'pageSize', 'total', 'continues'],
+  computed: {
+    totalPage() {
+      return Math.ceil(this.total / this.pageSize)
+    },
+    startNumAndEndNum() {
+      const { continues, pageNo, totalPage } = this
+      let start = 0,
+        end = 0
+      if (continues > totalPage) {
+        start = 1
+        end = totalPage
+      } else {
+        start = pageNo - parseInt(continues / 2)
+        end = pageNo + parseInt(continues / 2)
+
+        if (start < 1) {
+          start = 1
+          end = continues
+        }
+        if (end > totalPage) {
+          end = totalPage
+          start = totalPage - continues + 1
+        }
+      }
+      return { start, end }
+    },
+  },
 }
 </script>
 

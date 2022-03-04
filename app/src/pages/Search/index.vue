@@ -116,7 +116,7 @@
             </ul>
           </div>
           <!-- ページネーション -->
-          <Pagination />
+          <Pagination :pageNo="31" :pageSize="3" :total="91" :continues="5" />
         </div>
       </div>
     </div>
