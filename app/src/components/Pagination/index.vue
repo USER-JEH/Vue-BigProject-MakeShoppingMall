@@ -1,23 +1,44 @@
 <template>
   <div class="pagination">
-    <button>前ページ</button>
-    <button v-if="startNumAndEndNum.start > 1">1</button>
+    <!--  -->
+    <button :disabled="pageNo == 1" @click="$emit('getPageNo', pageNo - 1)">
+      上一页
+    </button>
+    <button
+      v-if="startNumAndEndNum.start > 1"
+      @click="$emit('getPageNo', 1)"
+      :class="{ active: pageNo == 1 }"
+    >
+      1
+    </button>
     <button v-if="startNumAndEndNum.start > 2">…</button>
 
     <button
       v-for="(page, index) in startNumAndEndNum.end"
       key="index"
       v-if="page >= startNumAndEndNum.start"
+      @click="$emit('getPageNo', page)"
+      :class="{ active: pageNo == page }"
     >
       {{ page }}
     </button>
 
     <button v-if="startNumAndEndNum.end < totalPage - 1">…</button>
-    <button v-if="startNumAndEndNum.end < totalPage">{{ totalPage }}</button>
-    <button>次ページ</button>
+    <button
+      v-if="startNumAndEndNum.end < totalPage"
+      @click="$emit('getPageNo', totalPage)"
+      :class="{active:pageNo==totalPage}"
+    >
+      {{ totalPage }}
+    </button>
+    <button
+      :disabled="pageNo == totalPage"
+      @click="$emit('getPageNo', pageNo + 1)"
+    >
+      次ページ
+    </button>
 
     <button style="margin-left: 30px">計{{ total }}個</button>
-    <h1>{{ startNumAndEndNum }}--{{ pageNo }}</h1>
   </div>
 </template>
 

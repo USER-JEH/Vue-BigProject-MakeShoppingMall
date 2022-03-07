@@ -5,11 +5,13 @@ Vue.use(Vuex)
 
 import home from './home'
 import search from './search'
+import detail from './detail'
 
 //对外暴漏STORE类的一个实例
 export default new Vuex.Store({
   modules: {
     home,
     search,
+    detail,
   },
 })

@@ -10,3 +10,8 @@ export const reqFloorList = () => mockRequests.get('/floor')
 
 export const repGetSearchInfo = (params) =>
   requests({ url: '/list', method: 'post', data: params })
+
+// /api/item/{ skuId }
+
+export const reqGoodsInfo = (skuId) =>
+  requests({ url: `/item/${skuId}`, method: 'get' })
