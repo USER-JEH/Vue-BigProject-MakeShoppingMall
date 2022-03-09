@@ -93,6 +93,12 @@
                     spuSaleAttrValue, index
                   ) in spuSaleAttr.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
+                  @click="
+                    changeActive(
+                      spuSaleAttrValue,
+                      spuSaleAttr.spuSaleAttrValueList
+                    )
+                  "
                 >
                   {{ spuSaleAttrValue.saleAttrValueName }}
                 </dd>
@@ -362,6 +368,14 @@ export default {
     ...mapGetters(['categoryView', 'skuInfo', 'spuSaleAttrList']),
     skuImageList() {
       return this.skuInfo.skuImageList || []
+    },
+  },
+  methods: {
+    changeActive(saleAttrValue, arr) {
+      arr.forEach((item) => {
+        item.isChecked = 0
+      })
+      saleAttrValue.isChecked = 1
     },
   },
 }

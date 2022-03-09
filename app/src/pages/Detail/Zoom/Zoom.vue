@@ -18,6 +18,11 @@ export default {
       return this.skuImageList[0] || {}
     },
   },
+  mounted(){
+    this.$bus.$on('getIndex',(index)=>{
+      
+    })
+  }
 }
 </script>
 
