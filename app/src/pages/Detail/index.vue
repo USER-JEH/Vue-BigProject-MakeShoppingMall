@@ -401,12 +401,17 @@ export default {
     },
     async addShopcar() {
       try {
-        await this.$store.dispatch('addOrUpdateShopCart', {
+        let result = await this.$store.dispatch('addOrUpdateShopCart', {
           skuId: this.$route.params.skuid,
           skuNum: this.skuNum,
         })
+        sessionStorage.setItem('SKUINFO', JSON.stringify(this.skuInfo))
+        this.$router.push({
+          name: 'addcartsuccess',
+          query: { skuNum: this.skuNum },
+        })
       } catch (error) {
-        alert(error.massage)
+        alert(error.message)
       }
     },
   },

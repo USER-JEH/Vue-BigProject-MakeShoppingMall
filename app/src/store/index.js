@@ -6,6 +6,7 @@ Vue.use(Vuex)
 import home from './home'
 import search from './search'
 import detail from './detail'
+import shopcart from './shopcart'
 
 //对外暴漏STORE类的一个实例
 export default new Vuex.Store({
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     home,
     search,
     detail,
+    shopcart
   },
 })
