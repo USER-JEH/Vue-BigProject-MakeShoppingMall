@@ -95,7 +95,7 @@ export default {
   methods: {
     changeIndex: throttle(function (index) {
       this.currentIndex = index
-    }, 50),
+    }, 20),
     leaveIndex() {
       this.currentIndex = -1
     },
