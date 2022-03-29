@@ -21,6 +21,7 @@
               type="checkbox"
               name="chk_list"
               :checked="cart.isChecked == 1"
+              @change="updateChecked(cart, $event)"
             />
           </li>
           <li class="cart-list-con2">
@@ -101,16 +102,14 @@ export default {
     getData() {
       this.$store.dispatch('getCartList')
     },
-    async handler(type, disNum, cart) {
+    handler: throttle(async function (type, disNum, cart) {
       switch (type) {
         case 'add':
           disNum = 1
           break
-
         case 'minus':
           disNum = cart.skuNum > 1 ? -1 : 0
           break
-
         case 'change':
           if (isNaN(disNum) || disNum < 1) {
             disNum = 0
@@ -126,15 +125,32 @@ export default {
         })
         this.getData()
       } catch (error) {}
-    },
-    deleteCartById: throttle(async function (cart) {
+    }, 500),
+    async deleteAllCheckedCart() {
       try {
-        await this.$store.dispatch('deleteCartListBySkuId', cart.skuId)
+        //派发一个action
+        await this.$store.dispatch('deleteAllCheckedCart')
+        //再发请求获取购物车列表
         this.getData()
       } catch (error) {
         alert(error.message)
       }
-    }, 1000),
+    },
+    async updateChecked(cart, event) {
+      //带给服务器的参数isChecked，不是布尔值，应该是0|1
+      try {
+        //如果修改数据成功，再次获取服务器数据（购物车）
+        let isChecked = event.target.checked ? '1' : '0'
+        await this.$store.dispatch('updateCheckedById', {
+          skuId: cart.skuId,
+          isChecked,
+        })
+        this.getData()
+      } catch (error) {
+        //如果失败提示
+        alert(error.message)
+      }
+    },
   },
   computed: {
     ...mapGetters(['cartList']),
