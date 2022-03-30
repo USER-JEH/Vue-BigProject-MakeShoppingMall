@@ -72,7 +72,7 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a @click="deleteAllCheckedCart">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -93,6 +93,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import throttle from 'lodash/throttle'
+import store from '@/store'
 export default {
   name: 'ShopCart',
   mounted() {
@@ -148,6 +149,15 @@ export default {
         this.getData()
       } catch (error) {
         //如果失败提示
+        alert(error.message)
+      }
+    },
+    async deleteAllCheckedCart() {
+      try {
+        await this.$store.dispatch('deleteAllCheckedCart')
+
+        this.getData()
+      } catch (error) {
         alert(error.message)
       }
     },
