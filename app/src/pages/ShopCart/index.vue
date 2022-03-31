@@ -68,7 +68,12 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllCheck" />
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isAllCheck"
+          @click="updateAllCartChecked"
+        />
         <span>全选</span>
       </div>
       <div class="option">
@@ -152,10 +157,20 @@ export default {
         alert(error.message)
       }
     },
-    async deleteAllCheckedCart() {
+    async deleteCartById(cart) {
       try {
-        await this.$store.dispatch('deleteAllCheckedCart')
+        //如果删除成功再次发请求获取新的数据进行展示
+        await this.$store.dispatch('deleteCartListBySkuId', cart.skuId)
+        this.getData()
+      } catch (error) {
+        alert(error.message)
+      }
+    },
+    async updateAllCartChecked(event) {
+      try {
+        let isChecked = event.target.checked ? '1' : '0'
 
+        await this.$store.dispatch('updateAllCartChecked', isChecked)
         this.getData()
       } catch (error) {
         alert(error.message)
